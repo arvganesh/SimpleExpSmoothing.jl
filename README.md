@@ -1,4 +1,4 @@
 # SimpleExpSmoothing.jl
 Implementing Simple Exponential Smoothing (SES) in Julia.
 
-[![Build Status](https://travis-ci.com/arvganesh/SimpleExpSmoothing.jl.svg?branch=master)](https://travis-ci.com/arvganesh/SimpleExpSmoothing.jl)
+[![codecov](https://codecov.io/gh/arvganesh/SimpleExpSmoothing.jl/branch/master/graph/badge.svg?token=V7ZS8LCMKU)](https://codecov.io/gh/arvganesh/SimpleExpSmoothing.jl)

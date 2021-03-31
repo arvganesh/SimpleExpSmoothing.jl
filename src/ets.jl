@@ -29,7 +29,8 @@ References:
 EXAMPLE USAGE:
 observations = [1.0, 2.0, 3.0]
 
-mdl = ExponentialSmoothing(observations, h = 5)
+# Inputted values will be used if they are specified. Otherwise, they will be computed.
+mdl = ExponentialSmoothing(observations, h = 5) # Will 
 mdl = ExponentialSmoothing(observations, alpha = 0.4)
 mdl = ExponentialSmoothing(observations, alpha = 0.25, init_level = 500.0)
 mdl = ExponentialSmoothing(observations, h = 15, alpha = 0.3, init_level = 750.0)
@@ -86,7 +87,7 @@ function predict_(model::ETSModel) # Return vector of fitted values of length h
     lvls = zeros(data_size + 1) # Stores smoothed values
     forecast = zeros(data_size + h) # Stores fitted values
     lvls[1] = init_level # Set l_0
-    forecast[1] = init_level # Set yhat_0
+    forecast[1] = init_level
     SSE = 0.0 # Compute Sum of Squared Errors
 
     for i in 2:(length(lvls)) # Compute l_t's
@@ -95,8 +96,8 @@ function predict_(model::ETSModel) # Return vector of fitted values of length h
         SSE += (forecast[i] - y[i-1])^2
     end
 
-    for i in 1:(h-1)
-        forecast[length(lvls) + i] = lvls[end]
+    for i in 1:h # Set forecasted values
+        forecast[data_size + i] = lvls[end]
     end
 
     return forecast, SSE

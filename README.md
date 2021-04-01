@@ -1,6 +1,11 @@
 # SimpleExpSmoothing.jl
 Implementing Simple Exponential Smoothing (SES) in Julia.
 
+## Table of Contents
+- [Installation](#installation)
+- [Basic Tour](#basic-tour)
+- [Customization](#customization)
+
 | Linux/OSX | Windows | Coverage |
 | :----: | :----: | :----: |
 | [![Build Status](https://travis-ci.com/arvganesh/SimpleExpSmoothing.jl.svg?branch=master)](https://travis-ci.com/arvganesh/SimpleExpSmoothing.jl) | [![Build status](https://ci.appveyor.com/api/projects/status/lmbbqp2tf46ccvyd?svg=true)](https://ci.appveyor.com/project/arvganesh/simpleexpsmoothing-jl) | [![codecov](https://codecov.io/gh/arvganesh/SimpleExpSmoothing.jl/branch/master/graph/badge.svg?token=V7ZS8LCMKU)](https://codecov.io/gh/arvganesh/SimpleExpSmoothing.jl) |
@@ -46,7 +51,7 @@ Both methods of plotting will yield something like this:
 
 <img src="https://user-images.githubusercontent.com/21336191/113225417-32f83400-9253-11eb-94e0-a54e5fb334b4.png" width="600" alt="example_plot">
 
-## Customizing the Model
+## Customization
 
 While the example above showed the `ExponentialSmoothing` object being used with only 1 parameter, it is possible to use more: 
 ```julia

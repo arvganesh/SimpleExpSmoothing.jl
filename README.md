@@ -20,8 +20,8 @@ Then, in Julia, do:
 ```julia
 using SimpleExpSmoothing
 
-y = [1.0, 2.0, 3.0, 4.0, 5.0] 
-mdl = ExponentialSmoothing(y) 
+y = [1.0, 2.0, 3.0, 4.0, 5.0] # Data to forecast on
+mdl = ExponentialSmoothing(y) # Initialize SES model
 
 fit!(mdl) # Fit the model. Find optimal parameters for SES.
 yhat = predict(mdl) # Compute the forecast based on determined parameters

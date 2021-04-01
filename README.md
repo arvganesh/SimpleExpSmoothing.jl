@@ -6,10 +6,6 @@ Implementing [Simple Exponential Smoothing](https://otexts.com/fpp2/ses.html) (S
 - [Basic Tour](#basic-tour)
 - [Customization](#customization)
 
-| Linux/OSX | Windows | Coverage |
-| :----: | :----: | :----: |
-| [![Build Status](https://travis-ci.com/arvganesh/SimpleExpSmoothing.jl.svg?branch=master)](https://travis-ci.com/arvganesh/SimpleExpSmoothing.jl) | [![Build status](https://ci.appveyor.com/api/projects/status/lmbbqp2tf46ccvyd?svg=true)](https://ci.appveyor.com/project/arvganesh/simpleexpsmoothing-jl) | [![codecov](https://codecov.io/gh/arvganesh/SimpleExpSmoothing.jl/branch/master/graph/badge.svg?token=V7ZS8LCMKU)](https://codecov.io/gh/arvganesh/SimpleExpSmoothing.jl) |
-
 ## Installation
 First, `git clone` into the package directory.
 
@@ -20,24 +16,30 @@ Then, in Julia, do:
 ```julia
 using SimpleExpSmoothing
 
-y = [1.0, 2.0, 3.0, 4.0, 5.0] 
-mdl = ExponentialSmoothing(y) 
+y = [445.36, 453.2, 454.41, 422.38, 456.04, 440.39, 425.19, 486.21, 500.43, 521.28, 
+     508.95, 488.89, 509.87, 456.72, 473.82, 525.95, 549.83, 542.32] # Data to forecast on. Cite: [1]
+mdl = ExponentialSmoothing(y) # Initialize SES model
 
 fit!(mdl) # Fit the model. Find optimal parameters for SES.
 yhat = predict(mdl) # Compute the forecast based on determined parameters
 ```
 At this point, `yhat` will look something like this:
 ```julia
-0.0
-0.9999999776901562
-1.9999999776901558
-2.999999977690156
-3.999999977690156
-4.999999977690155
-4.999999977690155
-4.999999977690155
-4.999999977690155
-4.999999977690155
+446.5735923427146
+445.561818502492
+451.9297824011145
+453.9975437047159
+427.6379479108166
+451.31678329980605
+442.2071069188588
+428.01991818111446
+. . .
+544.3769207888416
+542.6620626999179
+542.6620626999179 
+543.542.6620626999179
+542.6620626999179
+542.6620626999179
 ```
 To visualize the forecast, do this:
 ```julia
@@ -49,7 +51,7 @@ plot_ts(mdl) # Takes the ExponentialSmoothing object, makes predictions, and plo
 ```
 Both methods of plotting will yield something like this:
 
-<img src="https://user-images.githubusercontent.com/21336191/113225417-32f83400-9253-11eb-94e0-a54e5fb334b4.png" width="600" alt="example_plot">
+<img src="https://user-images.githubusercontent.com/21336191/113236346-4bc01400-926a-11eb-8863-8024ecfed6e8.png" width="600" alt="example_plot">
 
 ## Customization
 
@@ -76,5 +78,7 @@ plot_ts(mdl)
 ```
 The output of the code above may look like this:
 
-<img src="https://user-images.githubusercontent.com/21336191/113226601-35a85880-9256-11eb-9009-46977e0c6245.png" width="600" alt="example_plot">
+<img src="https://user-images.githubusercontent.com/21336191/113234520-0817db00-9267-11eb-9ebe-369ae38a3a36.png" width="600" alt="example_plot">
 
+## References
+[[1](https://otexts.com/fpp2/)] Hyndman, R.J., & Athanasopoulos, G. (2018) Forecasting: principles and practice, 2nd edition, OTexts: Melbourne, Australia. OTexts.com/fpp2. Accessed on 03/31/2021.

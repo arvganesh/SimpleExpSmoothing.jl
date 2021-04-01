@@ -21,7 +21,7 @@ Then, in Julia, do:
 using SimpleExpSmoothing
 
 y = [445.36, 453.2, 454.41, 422.38, 456.04, 440.39, 425.19, 486.21, 500.43, 521.28, 
-     508.95, 488.89, 509.87, 456.72, 473.82, 525.95, 549.83, 542.32] # Data to forecast on [1]
+     508.95, 488.89, 509.87, 456.72, 473.82, 525.95, 549.83, 542.32] # Data to forecast on. Cite: [1]
 mdl = ExponentialSmoothing(y) # Initialize SES model
 
 fit!(mdl) # Fit the model. Find optimal parameters for SES.

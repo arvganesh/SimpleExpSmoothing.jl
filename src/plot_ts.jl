@@ -12,11 +12,11 @@ Parameters:
 or
 
 Parameters:
-    model: given an ETSModel object, it computes fitted values and plots observed and fitted values
+    model: given an ETSModel object, it computes fitted values, and plots observed and fitted values
 
 Returns:
     Single plot of the observed and predicted values.
-    
+
 """
 function plot_ts(y::Vector{T} where {T <: AbstractFloat}, yhat::Vector{T} where {T <: AbstractFloat})
     data_size = size(yhat)

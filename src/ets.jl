@@ -1,5 +1,5 @@
 abstract type ETSModel end
-import Optim: optimize, LBFGS, Options, minimizer, Fminbox
+import Optim: optimize, BFGS, Options, minimizer, Fminbox, Brent, GradientDescent
 using LinearAlgebra
 import LineSearches
 
@@ -16,10 +16,10 @@ Constuctor:
         - Default = 10, must be > 0
     - Union{Nothing, Float64} alpha: smoothing parameter [1]
         - 0 < alpha < 1
-        - If no value is specified, an optimal value will be chosen using Brent's method.
+        - If no value is specified, an optimal value will be chosen using LBFGS.
     - Union{Nothing, Float64} init_level: initial level value [1]
         -Inf < init_level < Inf
-        - If no value is specified, an optimal value will be chosen uisng a heuristic method.
+        - If no value is specified, an optimal value will be chosen uisng LBFGS.
 
 References: 
     [1] Hyndman, R.J., & Athanasopoulos, G. (2019) *Forecasting:
@@ -93,7 +93,7 @@ function predict_(model::ETSModel) # Return vector of fitted values of length h
     for i in 2:(length(lvls)) # Compute l_t's
         lvls[i] = alpha * y[i-1] + (1 - alpha) * lvls[i-1];
         forecast[i] = lvls[i]
-        SSE += (forecast[i] - y[i-1])^2
+        SSE += (forecast[i-1] - y[i-1])^2
     end
 
     for i in 1:h # Set forecasted values
@@ -104,17 +104,24 @@ function predict_(model::ETSModel) # Return vector of fitted values of length h
 end
 
 """
-SSE_()
+SSE_() 
 
-- model: ExponentialSmoothing struct (defined above)
-- alpha: value of alpha use for computation
+Description:
+    - Returns the Sum of Squared Errors for a given alpha and init_level.
 
-Note: when SSE_ is used, alpha ≂̸ nothing, so model.alpha is always defined.
+Parameters:
+    - model: ExponentialSmoothing struct (defined above)
+    - alpha: value of alpha used for computation
+    - init_level: value of init_level used for computation
+    - verbose: if verbose > 0, then the parameters will be printed as the are optimized.
 
+Returns:
+    - Float64 res: the Sum of Squared Errors for the given alpha and init_level values.
 """
-function SSE_(model::ETSModel; alpha = nothing, verbose = 0) # Helper function for optimization
-    # If parameter values have been specified, keep them constant.
+function SSE_(model::ETSModel; alpha = nothing, init_level = nothing, verbose = 0) # Helper function for optimization
     model.alpha = alpha
+    model.init_level = init_level
+
     res = predict_(model)[2]
     if verbose > 0
         println("Error: $res, Alpha: $(model.alpha), L0: $(model.init_level)")
@@ -184,8 +191,7 @@ Parameters:
     - v: verbosity, default = 0. if v > 0, verbose will be used.
 
 Computation of model parameters:
-'alpha': computed using Brent's method
-'init_value': computed using a heuristic method
+'alpha' and 'init_value' are computed using LBFGS
 
 Returns:
     - nothing
@@ -195,14 +201,31 @@ function fit!(model::ETSModel; v=0) # Set alpha + init_level
         @warn "Since no value was entered for 'alpha', it will be chosen"
     end
     if (isnothing(model.init_level))
-        model.init_level = compute_init_heuristic_(model.y)
+        # model.init_level = compute_init_heuristic_(model.y)
         @warn "Since no value was entered for 'init_level', it will be chosen"
     end 
 
+
+    # Creating a copy of the user inputted params for the model as model.alpha and model.init_level will be updated later
+    base_alpha = model.alpha
+    base_init_level = model.init_level
+
     # Optimize predict(model) - directly updates model
-    if isnothing(model.alpha) # if atleast one value needs to be optimized
-        opt = LBFGS()
-        res = optimize(x -> SSE_(model, alpha=x, verbose=v), 0.0, 1.0)
+    f(x) = SSE_(model, 
+                alpha=(isnothing(base_alpha) ? x[1] : base_alpha),
+                init_level=(isnothing(base_init_level) ? x[2] : base_init_level),
+                verbose=v)
+
+    if isnothing(model.alpha) || isnothing(model.init_level) # if atleast one value needs to be optimized
+        # lower and upper limits for alpha and init_level
+        lower = [0.0, -Inf] 
+        upper = [1.0, Inf]
+        # Initial values for alpha and init_level
+        init_inputs = [0.0, model.y[1]]
+        res = optimize(f, lower, upper, init_inputs)
+        if v > 0
+            println(res)
+        end
     end
 
     return

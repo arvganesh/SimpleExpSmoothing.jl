@@ -30,7 +30,7 @@ EXAMPLE USAGE:
 observations = [1.0, 2.0, 3.0]
 
 # Inputted values will be used if they are specified. Otherwise, they will be computed.
-mdl = ExponentialSmoothing(observations, h = 5) # Will 
+mdl = ExponentialSmoothing(observations, h = 5) 
 mdl = ExponentialSmoothing(observations, alpha = 0.4)
 mdl = ExponentialSmoothing(observations, alpha = 0.25, init_level = 500.0)
 mdl = ExponentialSmoothing(observations, h = 15, alpha = 0.3, init_level = 750.0)
@@ -41,7 +41,7 @@ mutable struct ExponentialSmoothing <: ETSModel
     h::Integer
     alpha::Union{Nothing, Float64}
     init_level::Union{Nothing, Float64}
-    function ExponentialSmoothing(y = []; h = 10, alpha = nothing, init_level = nothing) # Constuctor 
+    function ExponentialSmoothing(y = []; h = 5, alpha = nothing, init_level = nothing) # Constuctor 
         # Input Cleaning
         if length(y) <= 0
             error("The input array is empty.")

@@ -1,5 +1,5 @@
 # SimpleExpSmoothing.jl
-Implementing Simple Exponential Smoothing (SES) in Julia.
+Implementing [Simple Exponential Smoothing](https://otexts.com/fpp2/ses.html) (SES) in Julia.
 
 ## Table of Contents
 - [Installation](#installation)

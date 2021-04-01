@@ -76,5 +76,4 @@ plot_ts(mdl)
 ```
 The output of the code above may look like this:
 
-<img src="https://user-images.githubusercontent.com/21336191/113226601-35a85880-9256-11eb-9009-46977e0c6245.png" width="600" alt="example_plot">
-
+<img src="https://user-images.githubusercontent.com/21336191/113234520-0817db00-9267-11eb-9ebe-369ae38a3a36.png" width="600" alt="example_plot">

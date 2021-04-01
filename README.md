@@ -83,3 +83,6 @@ plot_ts(mdl)
 The output of the code above may look like this:
 
 <img src="https://user-images.githubusercontent.com/21336191/113234520-0817db00-9267-11eb-9ebe-369ae38a3a36.png" width="600" alt="example_plot">
+
+## References
+[[1](https://otexts.com/fpp2/)] Hyndman, R.J., & Athanasopoulos, G. (2018) Forecasting: principles and practice, 2nd edition, OTexts: Melbourne, Australia. OTexts.com/fpp2. Accessed on 03/31/2021.

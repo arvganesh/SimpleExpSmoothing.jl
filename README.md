@@ -7,7 +7,7 @@ Implementing [Simple Exponential Smoothing](https://otexts.com/fpp2/ses.html) (S
 - [Customization](#customization)
 
 ## Installation
-First, `git clone` into the package directory.
+First, `git clone` and `cd` into the package directory.
 
 Then, in Julia, do:
 ```]activate .``` and ```instantiate```

@@ -68,7 +68,7 @@ h: Number of time steps to forecast (h > 0, default: 5)
 alpha: Smoothing parameter used in SES. (0 < alpha < 1, default: nothing)
 init_level: initial level value. (default: nothing)
 ```
-If `alpha` or `init_level` is `nothing`, an estimated optimal value will be computed.
+If `alpha` or `init_level` is `nothing`, an estimated optimal value will be computed using `L-BGFS`.
 ### Example
 ```julia
 y = rand(1.:100., 25)
